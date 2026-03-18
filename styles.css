@@ -901,7 +901,8 @@ button,input,textarea{font:inherit;color:inherit}
 
   /* Hero: ровный бордовый фон под слоями на мобиле */
   #top{
-    background: linear-gradient(180deg, rgba(46,10,14,.92), rgba(18,6,8,.92));
+    /* явно указываем тот же фон, что и на ПК */
+    background: url("./media/hero-bg.png") center / cover no-repeat;
   }
 
   #services{padding-top: 16px;}
