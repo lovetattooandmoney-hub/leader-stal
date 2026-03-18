@@ -411,29 +411,14 @@ button,input,textarea{font:inherit;color:inherit}
   border-top: 1px solid rgba(255,255,255,.06);
 }
 
-/* Desktop: make section backgrounds continuous (no fade bands) */
+/* Desktop: keep this area clean and even (no dark bands) */
 #process,
 #cases{
-  background:
-    radial-gradient(900px 420px at 25% 15%, rgba(223,37,49,.16), rgba(223,37,49,0) 62%),
-    radial-gradient(900px 520px at 85% 55%, rgba(223,37,49,.12), rgba(223,37,49,0) 68%),
-    linear-gradient(180deg, rgba(10,5,7,.92), rgba(5,5,7,.92));
+  background: linear-gradient(180deg, rgba(46,10,14,.92), rgba(18,6,8,.92));
 }
 
-/* Remove visible stripe between process -> cases, add subtle accent gradient */
-#cases{
-  border-top: 0;
-}
-#cases::before{
-  content:"";
-  position:absolute;
-  left:0; right:0; top:0;
-  height:120px;
-  pointer-events:none;
-  background:
-    radial-gradient(900px 220px at 50% 0%, rgba(223,37,49,.22), transparent 70%),
-    linear-gradient(180deg, rgba(223,37,49,.08), rgba(5,5,7,0));
-}
+/* Process -> cases should be seamless */
+#cases{ border-top: 0; }
 
 /* Contacts can stay a bit softer */
 #contacts{
