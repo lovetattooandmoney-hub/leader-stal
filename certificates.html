@@ -32,7 +32,7 @@
           <span class="brand__mark" aria-hidden="true"></span>
           <span class="brand__text">
             <span class="brand__name">КБ Лидер‑Сталь</span>
-            <span class="brand__tag">спецстали • металлопрокат • резка по чертежам</span>
+            <span class="brand__tag">спецстали • металлопрокат • сертифицированная продукция</span>
           </span>
         </a>
 
@@ -45,9 +45,19 @@
         </nav>
 
         <div class="header__actions">
-          <a class="btn btn--ghost" href="tel:+79855113579">
-            <span class="btn__text">+7 985 511‑35‑79</span>
-          </a>
+          <div class="header__call" data-header-call>
+            <button class="header__call-btn" type="button" aria-label="Позвонить">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7.5 3.5h2l1.2 5-1.7 1.2a14.8 14.8 0 0 0 5.3 5.3l1.2-1.7 5 1.2v2a2 2 0 0 1-1.8 2c-8.3.6-15-6.1-14.4-14.4A2 2 0 0 1 7.5 3.5Z"/>
+              </svg>
+              <span class="header__call-text">Позвонить</span>
+            </button>
+            <div class="header__call-dropdown">
+              <a class="header__call-link" href="tel:+79855113579">+7 985 511‑35‑79</a>
+              <a class="header__call-link" href="tel:+79855113578">+7 985 511‑35‑78</a>
+              <a class="header__call-link" href="tel:+74955325887">+7 495 532‑58‑87</a>
+            </div>
+          </div>
           <button class="burger" type="button" aria-label="Открыть меню" data-burger>
             <span class="burger__line" aria-hidden="true"></span>
             <span class="burger__line" aria-hidden="true"></span>
@@ -61,7 +71,7 @@
     </header>
 
     <main id="main">
-      <section class="hero">
+      <section class="hero hero--photo">
         <div class="container hero__inner" style="grid-template-columns: 1fr">
           <div class="hero__content reveal">
             <div class="pill">
@@ -148,6 +158,19 @@
     <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast>
       <div class="toast__dot" aria-hidden="true"></div>
       <div class="toast__text" data-toast-text>Готово</div>
+    </div>
+
+    <div class="float-call" data-float-call>
+      <button class="float-call__btn" type="button" aria-label="Позвонить">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7.5 3.5h2l1.2 5-1.7 1.2a14.8 14.8 0 0 0 5.3 5.3l1.2-1.7 5 1.2v2a2 2 0 0 1-1.8 2c-8.3.6-15-6.1-14.4-14.4A2 2 0 0 1 7.5 3.5Z"/>
+        </svg>
+      </button>
+      <div class="float-call__dropdown">
+        <a class="float-call__link" href="tel:+79855113579">+7 985 511‑35‑79</a>
+        <a class="float-call__link" href="tel:+79855113578">+7 985 511‑35‑78</a>
+        <a class="float-call__link" href="tel:+74955325887">+7 495 532‑58‑87</a>
+      </div>
     </div>
 
     <script src="./config.js"></script>

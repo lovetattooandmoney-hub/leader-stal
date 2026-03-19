@@ -155,6 +155,51 @@
     });
   });
 
+  // Floating call + Header call dropdown
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      $$('[data-float-call].is-open, [data-header-call].is-open').forEach((w) => w.classList.remove('is-open'));
+    }
+  });
+  $$('[data-header-call]').forEach((wrap) => {
+    const btn = wrap.querySelector('.header__call-btn');
+    if (!btn) return;
+    const onOutside = (e) => {
+      const t = e.target;
+      if (wrap.contains(t)) return;
+      wrap.classList.remove('is-open');
+      document.removeEventListener('click', onOutside, true);
+    };
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = wrap.classList.toggle('is-open');
+      if (open) {
+        setTimeout(() => document.addEventListener('click', onOutside, true), 0);
+      } else {
+        document.removeEventListener('click', onOutside, true);
+      }
+    });
+  });
+  $$('[data-float-call]').forEach((wrap) => {
+    const btn = wrap.querySelector('.float-call__btn');
+    if (!btn) return;
+    const onFloatOutside = (e) => {
+      const t = e.target;
+      if (wrap.contains(t)) return;
+      wrap.classList.remove('is-open');
+      document.removeEventListener('click', onFloatOutside, true);
+    };
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = wrap.classList.toggle('is-open');
+      if (open) {
+        setTimeout(() => document.addEventListener('click', onFloatOutside, true), 0);
+      } else {
+        document.removeEventListener('click', onFloatOutside, true);
+      }
+    });
+  });
+
   // File UI
   const fileInput = $('input[type="file"][name="file"]');
   const fileName = $('[data-file-name]');
@@ -194,19 +239,21 @@
     });
   }
 
-  // Form submit (demo)
-  const form = $('[data-form]');
-  form?.addEventListener('submit', (e) => {
+  // Form submit → endpoint (Telegram Worker)
+  $$('[data-form]').forEach((form) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     const fd = new FormData(form);
     const name = String(fd.get('name') || '').trim();
     const phone = String(fd.get('phone') || '').trim();
     const msg = String(fd.get('message') || '').trim();
 
+    const msgField = form.querySelector('[name="message"]');
+    const msgRequired = msgField?.hasAttribute('required');
     const bad = [];
     if (name.length < 2) bad.push('Укажите имя');
     if (phone.replace(/\D/g, '').length < 10) bad.push('Укажите телефон');
-    if (msg.length < 10) bad.push('Опишите задачу');
+    if (msgRequired && msg.length < 10) bad.push('Опишите задачу');
 
     if (bad.length) {
       showToast(bad[0]);
@@ -239,6 +286,7 @@
       }
       showToast('Не удалось отправить. Напишите нам в Telegram/на почту.');
     })();
+  });
   });
 })();
 
