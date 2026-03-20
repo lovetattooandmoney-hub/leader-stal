@@ -1,7 +1,6 @@
-// Конфиг для отправки заявок в Telegram (без секретов на фронтенде)
-// 1) Разверните Cloudflare Worker (см. telegram-worker.js, wrangler.toml)
-// 2) Добавьте секреты: BOT_TOKEN, CHAT_ID
-// 3) Укажите URL вашего Worker ниже (обязательно с /lead)
-// window.__LEAD_ENDPOINT__ = 'https://kb-lider-leads.ВАШ-АККАУНТ.workers.dev/lead';
-window.__LEAD_ENDPOINT__ = '';
-
+// Конфиг: заявки в Telegram через Cloudflare Worker
+// 1. Деплой: npx wrangler deploy
+// 2. Секреты: npx wrangler secret put BOT_TOKEN
+//             npx wrangler secret put CHAT_ID
+// 3. Вставьте URL воркера + /lead (см. DEPLOY.md)
+window.__LEAD_ENDPOINT__ = '';  // ← https://kb-lider-leads.xxx.workers.dev/lead

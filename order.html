@@ -18,7 +18,7 @@
     />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./favicon.png" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=3" />
   </head>
   <body>
     <a class="skip" href="#main">Перейти к содержимому</a>
@@ -35,7 +35,7 @@
           <span class="brand__mark" aria-hidden="true"></span>
           <span class="brand__text">
             <span class="brand__name">КБ Лидер‑Сталь</span>
-            <span class="brand__tag">спецстали • металлопрокат • сертифицированная продукция</span>
+            <span class="brand__tag">металлопрокат из специальных сталей и сплавов • резка металла по чертежам</span>
           </span>
         </a>
 
@@ -83,8 +83,7 @@
             </div>
             <h1 class="h1">Разместить заказ</h1>
             <p class="lead">
-              Оставьте заявку — мы рассчитаем цену и сроки. Можно приложить чертёж (PDF/DXF/DWG) или
-              перечень позиций по прокату.
+              Оставьте заявку — мы рассчитаем цену и сроки. Укажите в сообщении марку, размеры и перечень позиций.
             </p>
           </div>
         </div>
@@ -96,7 +95,7 @@
             <div class="cta__left">
               <h2 class="h2">Данные для расчёта</h2>
               <p class="muted">
-                Укажите марку/размер/количество или приложите чертёж. Работаем по коммерческим договорам
+                Укажите марку, размер, количество и требования. Работаем по коммерческим договорам
                 и в рамках ГОЗ по 275‑ФЗ (отдельный счёт).
               </p>
               <div class="cta__bullets">
@@ -124,24 +123,14 @@
                   />
                 </label>
               </div>
-
               <label class="field">
-                <span class="field__label">Комментарий</span>
+                <span class="field__label">Что нужно сделать</span>
                 <textarea
                   class="field__input field__input--area"
                   name="message"
                   placeholder="Например: 25Х17Н2Б‑Ш пруток Ø40, 3 м, 10 шт; или резка по DXF — материал/толщина/кол-во, требования."
                   required
                 ></textarea>
-              </label>
-
-              <label class="field field--file">
-                <span class="field__label">Файл (необязательно)</span>
-                <input class="field__file" type="file" name="file" accept=".pdf,.dxf,.dwg,.zip,.rar,.7z,.png,.jpg,.jpeg" />
-                <span class="field__fileUi" data-file-ui>
-                  <span class="field__fileName" data-file-name>Прикрепить чертёж (PDF/DXF/DWG)</span>
-                  <span class="field__fileHint">до 25 МБ</span>
-                </span>
               </label>
 
               <button class="btn btn--primary btn--wide" type="submit">Отправить</button>

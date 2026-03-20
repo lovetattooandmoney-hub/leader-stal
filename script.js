@@ -1,6 +1,6 @@
 /* global window, document */
 (() => {
-  const $ = (sel, root = document) => root.querySelector(sel);
+  image.png  const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
   const header = $('[data-header]');
@@ -200,22 +200,6 @@
     });
   });
 
-  // File UI
-  const fileInput = $('input[type="file"][name="file"]');
-  const fileName = $('[data-file-name]');
-  const fileUi = $('[data-file-ui]');
-  const updateFileUi = () => {
-    if (!fileName) return;
-    const f = fileInput?.files?.[0];
-    fileName.textContent = f ? `Файл: ${f.name}` : 'Прикрепить чертёж (PDF/DXF/DWG)';
-    if (fileUi) {
-      fileUi.style.borderColor = f ? 'rgba(223,37,49,.55)' : 'rgba(255,255,255,.16)';
-      fileUi.style.background = f ? 'rgba(223,37,49,.08)' : 'rgba(255,255,255,.02)';
-    }
-  };
-  fileInput?.addEventListener('change', updateFileUi);
-  updateFileUi();
-
   // Certificate lightbox (certificates.html)
   const certModal = $('[data-cert-modal]');
   const certOpen = $('[data-cert-open]');
@@ -239,54 +223,57 @@
     });
   }
 
-  // Form submit → endpoint (Telegram Worker)
+  // Form submit → Telegram
   $$('[data-form]').forEach((form) => {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const fd = new FormData(form);
-    const name = String(fd.get('name') || '').trim();
-    const phone = String(fd.get('phone') || '').trim();
-    const msg = String(fd.get('message') || '').trim();
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const name = String(fd.get('name') || '').trim();
+      const phone = String(fd.get('phone') || '').trim();
+      const msg = String(fd.get('message') || '').trim();
 
-    const msgField = form.querySelector('[name="message"]');
-    const msgRequired = msgField?.hasAttribute('required');
-    const bad = [];
-    if (name.length < 2) bad.push('Укажите имя');
-    if (phone.replace(/\D/g, '').length < 10) bad.push('Укажите телефон');
-    if (msgRequired && msg.length < 10) bad.push('Опишите задачу');
-
-    if (bad.length) {
-      showToast(bad[0]);
-      return;
-    }
-
-    const endpoint =
-      (typeof window !== 'undefined' && window.__LEAD_ENDPOINT__) || form.getAttribute('data-endpoint') || '';
-
-    const submitOnline = async () => {
-      if (!endpoint) return false;
-      try {
-        fd.set('page', window.location.href);
-        const r = await fetch(endpoint, { method: 'POST', body: fd });
-        const j = await r.json().catch(() => null);
-        if (!r.ok || !j || j.ok !== true) return false;
-        return true;
-      } catch {
-        return false;
-      }
-    };
-
-    (async () => {
-      const ok = await submitOnline();
-      if (ok) {
-        form.reset();
-        updateFileUi();
-        showToast('Заявка отправлена. Мы свяжемся с вами!');
+      if (name.length < 2) {
+        showToast('Укажите имя');
         return;
       }
-      showToast('Не удалось отправить. Напишите нам в Telegram/на почту.');
-    })();
-  });
+      if (phone.replace(/\D/g, '').length < 10) {
+        showToast('Укажите телефон');
+        return;
+      }
+      if (msg.length < 10) {
+        showToast('Опишите, что нужно сделать');
+        return;
+      }
+
+      const endpoint = (typeof window !== 'undefined' && window.__LEAD_ENDPOINT__) || '';
+
+      const sendViaWorker = async () => {
+        const fd = new FormData();
+        fd.set('name', name);
+        fd.set('phone', phone);
+        fd.set('message', msg);
+        fd.set('page', window.location.href);
+        const r = await fetch(endpoint, { method: 'POST', body: fd });
+        const j = await r.json().catch(() => ({}));
+        return r.ok && j.ok === true;
+      };
+
+      (async () => {
+        if (!endpoint) {
+          showToast('Настройте __LEAD_ENDPOINT__ в config.js (см. DEPLOY.md)');
+          return;
+        }
+        const ok = await sendViaWorker();
+        if (ok) {
+          form.reset();
+          showToast('Заявка отправлена. Мы свяжемся с вами!');
+        } else {
+          showToast('Не удалось отправить. Проверьте BOT_TOKEN и CHAT_ID во воркере.');
+        }
+      })().catch(() => {
+        showToast('Не удалось отправить. Напишите нам в Telegram/на почту.');
+      });
+    });
   });
 })();
 
