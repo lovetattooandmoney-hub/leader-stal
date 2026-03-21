@@ -6,23 +6,26 @@ cd /d "%~dp0"
 set PORT=8000
 set URL=http://localhost:%PORT%/
 
+where php >nul 2>nul
+if not errorlevel 1 (
+  echo Локальный сервер PHP: %URL%
+  start "PHP server" cmd /c "php -S localhost:%PORT%"
+  timeout /t 1 /nobreak >nul
+  start "" "%URL%"
+  echo Готово. Закройте окно "PHP server", чтобы остановить.
+  pause
+  exit /b 0
+)
+
 where python >nul 2>nul
 if errorlevel 1 (
-  echo Python не найден. Установите Python 3 и повторите.
-  echo Затем запустите снова этот файл.
+  echo Не найдены PHP и Python. Установите один из них.
   pause
   exit /b 1
 )
 
-echo Запускаю локальный сервер: %URL%
+echo Локальный сервер Python: %URL%
 start "Local server" cmd /c "python -m http.server %PORT%"
-
-rem Небольшая пауза, чтобы сервер успел подняться
 timeout /t 1 /nobreak >nul
-
 start "" "%URL%"
-
-echo Готово. Окно сервера можно не закрывать, пока работает сайт.
-echo Для остановки сервера закройте окно "Local server".
 pause
-

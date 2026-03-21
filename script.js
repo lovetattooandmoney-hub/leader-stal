@@ -3,6 +3,16 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
+  const formAction =
+    typeof window.FORM_SUBMIT_URL === 'string' && window.FORM_SUBMIT_URL.trim() !== ''
+      ? window.FORM_SUBMIT_URL.trim()
+      : '';
+  if (formAction) {
+    $$('[data-form]').forEach((form) => {
+      form.action = formAction;
+    });
+  }
+
   const header = $('[data-header]');
   const progress = $('[data-progress]');
   const toast = $('[data-toast]');
@@ -226,30 +236,47 @@
     });
   }
 
-  // Формы: валидация + подсказка связаться через контакты
+  // Заявки: POST на send.php (почта хостинга, без зарубежных form-сервисов).
   $$('[data-form]').forEach((form) => {
     form.addEventListener('submit', (e) => {
-      e.preventDefault();
       const fd = new FormData(form);
       const name = String(fd.get('name') || '').trim();
       const phone = String(fd.get('phone') || '').trim();
       const msg = String(fd.get('message') || '').trim();
-
       if (name.length < 2) {
+        e.preventDefault();
         showToast('Укажите имя');
         return;
       }
       if (phone.replace(/\D/g, '').length < 10) {
+        e.preventDefault();
         showToast('Укажите телефон');
         return;
       }
       if (msg.length < 10) {
+        e.preventDefault();
         showToast('Опишите, что нужно сделать');
         return;
       }
-
-      showToast('Заявки через форму отключены. Свяжитесь с нами в разделе «Контакты».');
     });
   });
+
+  const params = new URLSearchParams(window.location.search);
+  const stripQueryFlags = () => {
+    if (!window.history.replaceState) return;
+    const u = new URL(window.location.href);
+    u.searchParams.delete('sent');
+    u.searchParams.delete('error');
+    const qs = u.searchParams.toString();
+    window.history.replaceState({}, '', u.pathname + (qs ? `?${qs}` : '') + u.hash);
+  };
+  if (params.get('sent') === '1') {
+    showToast('Заявка отправлена. Мы свяжемся с вами.');
+    stripQueryFlags();
+  }
+  if (params.get('error') === '1') {
+    showToast('Не удалось отправить заявку. Позвоните нам или напишите на почту из раздела «Контакты».');
+    stripQueryFlags();
+  }
 })();
 

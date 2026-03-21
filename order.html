@@ -105,7 +105,17 @@
               </div>
             </div>
 
-            <form class="form" data-form>
+            <form class="form" data-form action="send.php" method="POST">
+              <input type="hidden" name="_subject" value="Заявка с сайта (раздел «Заказ») — КБ Лидер-Сталь" />
+              <input type="hidden" name="_return" value="order.html" />
+              <input
+                type="text"
+                name="website"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+                style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0"
+              />
               <div class="form__row">
                 <label class="field">
                   <span class="field__label">Имя</span>
@@ -178,6 +188,7 @@
       </div>
     </div>
 
+    <script src="./config.js"></script>
     <script src="./script.js" defer></script>
   </body>
 </html>

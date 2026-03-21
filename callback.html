@@ -87,7 +87,17 @@
       <section class="section section--cta" style="padding-top: 20px">
         <div class="container">
           <div class="cta reveal" style="grid-template-columns: 1fr">
-            <form class="form" data-form style="max-width: 720px; margin-inline: auto">
+            <form class="form" data-form style="max-width: 720px; margin-inline: auto" action="send.php" method="POST">
+              <input type="hidden" name="_subject" value="Заказ звонка — КБ Лидер-Сталь" />
+              <input type="hidden" name="_return" value="callback.html" />
+              <input
+                type="text"
+                name="website"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+                style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0"
+              />
               <div class="form__row">
                 <label class="field">
                   <span class="field__label">Имя</span>
@@ -160,6 +170,7 @@
       </div>
     </div>
 
+    <script src="./config.js"></script>
     <script src="./script.js" defer></script>
   </body>
 </html>
