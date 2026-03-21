@@ -9,7 +9,10 @@
   const toastText = $('[data-toast-text]');
 
   const showToast = (text) => {
-    if (!toast) return;
+    if (!toast || !toastText) {
+      window.alert(text);
+      return;
+    }
     toastText.textContent = text;
     toast.classList.add('is-show');
     window.clearTimeout(showToast._t);
@@ -223,7 +226,7 @@
     });
   }
 
-  // Form submit → Telegram
+  // Формы: валидация + подсказка связаться через контакты
   $$('[data-form]').forEach((form) => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -245,34 +248,7 @@
         return;
       }
 
-      const endpoint = (typeof window !== 'undefined' && window.__LEAD_ENDPOINT__) || '';
-
-      const sendViaWorker = async () => {
-        const fd = new FormData();
-        fd.set('name', name);
-        fd.set('phone', phone);
-        fd.set('message', msg);
-        fd.set('page', window.location.href);
-        const r = await fetch(endpoint, { method: 'POST', body: fd });
-        const j = await r.json().catch(() => ({}));
-        return r.ok && j.ok === true;
-      };
-
-      (async () => {
-        if (!endpoint) {
-          showToast('Настройте __LEAD_ENDPOINT__ в config.js (см. DEPLOY.md)');
-          return;
-        }
-        const ok = await sendViaWorker();
-        if (ok) {
-          form.reset();
-          showToast('Заявка отправлена. Мы свяжемся с вами!');
-        } else {
-          showToast('Не удалось отправить. Проверьте BOT_TOKEN и CHAT_ID во воркере.');
-        }
-      })().catch(() => {
-        showToast('Не удалось отправить. Напишите нам в Telegram/на почту.');
-      });
+      showToast('Заявки через форму отключены. Свяжитесь с нами в разделе «Контакты».');
     });
   });
 })();
