@@ -255,26 +255,28 @@
         return;
       }
       const subject = String(fd.get('_subject') || 'Заявка с сайта — КБ Лидер-Сталь').trim();
-      const body = ['Имя: ' + name, 'Телефон: ' + phone, '', 'Сообщение:', msg].join('\n');
-      const href =
+      let bodyText = ['Имя: ' + name, 'Телефон: ' + phone, '', 'Сообщение:', msg].join('\n');
+      const buildHref = (b) =>
         'mailto:' +
         orderMailto +
         '?subject=' +
         encodeURIComponent(subject) +
         '&body=' +
-        encodeURIComponent(body);
-      try {
-        const a = document.createElement('a');
-        a.href = href;
-        a.setAttribute('aria-hidden', 'true');
-        a.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0;pointer-events:none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      } catch {
-        window.location.assign(href);
+        encodeURIComponent(b);
+      const MAX_HREF = 1950;
+      let href = buildHref(bodyText);
+      if (href.length > MAX_HREF) {
+        const note = '\n\n[Текст укорочен — при необходимости допишите детали в письме.]';
+        while (bodyText.length > 40 && buildHref(bodyText + note).length > MAX_HREF) {
+          bodyText = bodyText.slice(0, Math.floor(bodyText.length * 0.88));
+        }
+        href = buildHref(bodyText + note);
       }
-      showToast('Откройте почту и отправьте письмо — или выберите приложение, если система спросит.');
+      // Прямой переход из обработчика submit сохраняет «жест пользователя»; синтетический a.click() в Chrome часто не открывает mailto.
+      window.location.assign(href);
+      showToast(
+        'Должен открыться почтовый клиент. Если ничего не произошло: Параметры Windows → Приложения → «Почта» по умолчанию.'
+      );
     });
   });
 
