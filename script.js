@@ -6,15 +6,25 @@
   const orderMailto =
     typeof window.ORDER_MAILTO === 'string' && window.ORDER_MAILTO.trim() !== ''
       ? window.ORDER_MAILTO.trim()
-      : 'info.leader-steel@mail.ru';
-  const orderOpenMode =
-    typeof window.ORDER_OPEN_MODE === 'string' && window.ORDER_OPEN_MODE.trim().toLowerCase() === 'mailto'
-      ? 'mailto'
-      : 'yandex';
+      : 'info.leader-steel@mail.ru,sales3_ls@mail.ru,sales2_ls@mail.ru';
+  try {
+    localStorage.removeItem('leader-stal-mail-provider-v1');
+  } catch {
+    /* старый ключ сохранения выбора почты — больше не используется */
+  }
+
   const yandexComposeBase =
     typeof window.ORDER_YANDEX_COMPOSE === 'string' && window.ORDER_YANDEX_COMPOSE.trim() !== ''
       ? window.ORDER_YANDEX_COMPOSE.trim().replace(/\/$/, '')
       : 'https://mail.yandex.ru/compose';
+  const mailruComposePrefix =
+    typeof window.ORDER_MAILRU_COMPOSE === 'string' && window.ORDER_MAILRU_COMPOSE.trim() !== ''
+      ? window.ORDER_MAILRU_COMPOSE.trim()
+      : 'https://e.mail.ru/compose/?mailto=';
+  const gmailComposeBase =
+    typeof window.ORDER_GMAIL_COMPOSE === 'string' && window.ORDER_GMAIL_COMPOSE.trim() !== ''
+      ? window.ORDER_GMAIL_COMPOSE.trim()
+      : 'https://mail.google.com/mail/?view=cm&fs=1';
 
   const header = $('[data-header]');
   const progress = $('[data-progress]');
@@ -30,6 +40,126 @@
     toast.classList.add('is-show');
     window.clearTimeout(showToast._t);
     showToast._t = window.setTimeout(() => toast.classList.remove('is-show'), 2400);
+  };
+
+  const buildMailtoUri = (subject, body) =>
+    'mailto:' +
+    orderMailto +
+    '?subject=' +
+    encodeURIComponent(subject) +
+    '&body=' +
+    encodeURIComponent(body);
+
+  const buildHrefForProvider = (provider, subject, body) => {
+    const mailtoUri = buildMailtoUri(subject, body);
+    switch (provider) {
+      case 'yandex':
+        return yandexComposeBase + '?mailto=' + encodeURIComponent(mailtoUri);
+      case 'mailru':
+        return mailruComposePrefix + encodeURIComponent(mailtoUri);
+      case 'gmail':
+        return (
+          gmailComposeBase +
+          '&to=' +
+          encodeURIComponent(orderMailto) +
+          '&su=' +
+          encodeURIComponent(subject) +
+          '&body=' +
+          encodeURIComponent(body)
+        );
+      case 'mailto':
+      default:
+        return mailtoUri;
+    }
+  };
+
+  const shortenHref = (provider, subject, bodyText) => {
+    const note = '\n\n[Текст укорочен — при необходимости допишите детали в письме.]';
+    const maxLen = provider === 'gmail' ? 2000 : 1850;
+    let b = bodyText;
+    let href = buildHrefForProvider(provider, subject, b);
+    while (href.length > maxLen && b.length > 40) {
+      b = b.slice(0, Math.floor(b.length * 0.88));
+      href = buildHrefForProvider(provider, subject, b + note);
+    }
+    return href;
+  };
+
+  const resolveMailProvider = () => {
+    const mode = String(window.ORDER_OPEN_MODE || 'chooser')
+      .trim()
+      .toLowerCase();
+    if (['yandex', 'mailru', 'gmail', 'mailto'].includes(mode)) return mode;
+    return null;
+  };
+
+  const openMailProviderModal = () =>
+    new Promise((resolve) => {
+      const overlay = document.createElement('div');
+      overlay.className = 'mail-modal';
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-labelledby', 'mail-modal-title');
+      overlay.innerHTML = `
+      <div class="mail-modal__panel">
+        <h2 id="mail-modal-title" class="mail-modal__title">Где открыть письмо?</h2>
+        <p class="mail-modal__hint">Браузер не сообщает сайту, в какой почте вы авторизованы. Укажите тот сервис, где вы уже вошли в аккаунт.</p>
+        <div class="mail-modal__btns">
+          <button type="button" class="btn btn--primary mail-modal__pick" data-provider="yandex">Яндекс</button>
+          <button type="button" class="btn btn--primary mail-modal__pick" data-provider="mailru">Mail.ru</button>
+          <button type="button" class="btn btn--primary mail-modal__pick" data-provider="gmail">Gmail</button>
+          <button type="button" class="btn btn--primary mail-modal__pick" data-provider="mailto">Почта на компьютере</button>
+        </div>
+        <button type="button" class="mail-modal__cancel btn btn--ghost">Отмена</button>
+      </div>`;
+      document.body.appendChild(overlay);
+
+      let onKey = null;
+      const close = () => {
+        if (onKey) document.removeEventListener('keydown', onKey);
+        overlay.remove();
+      };
+
+      onKey = (e) => {
+        if (e.key === 'Escape') {
+          close();
+          resolve(null);
+        }
+      };
+      document.addEventListener('keydown', onKey);
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          close();
+          resolve(null);
+        }
+      });
+
+      overlay.querySelectorAll('.mail-modal__pick').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const provider = btn.getAttribute('data-provider');
+          close();
+          resolve({ provider });
+        });
+      });
+
+      overlay.querySelector('.mail-modal__cancel').addEventListener('click', () => {
+        close();
+        resolve(null);
+      });
+    });
+
+  const toastAfterProvider = (provider) => {
+    if (provider === 'yandex') {
+      return 'Открывается Яндекс.Почта. Войдите в аккаунт, если попросит.';
+    }
+    if (provider === 'mailru') {
+      return 'Открывается Почта Mail.ru. Войдите в аккаунт, если попросит.';
+    }
+    if (provider === 'gmail') {
+      return 'Открывается Gmail. Войдите в аккаунт Google, если попросит.';
+    }
+    return 'Должен открыться почтовый клиент. Если нет — задайте почту по умолчанию в Windows.';
   };
 
   // Year
@@ -239,9 +369,9 @@
     });
   }
 
-  // Заявки: открытие почтового клиента (mailto) с данными формы.
+  // Заявки: веб-почта (Яндекс / Mail.ru / Gmail) или mailto — см. config.js.
   $$('[data-form]').forEach((form) => {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const fd = new FormData(form);
       if (String(fd.get('hp_field') || '').trim()) {
@@ -262,34 +392,19 @@
         showToast('Опишите, что нужно сделать');
         return;
       }
-      const subject = String(fd.get('_subject') || 'Заявка с сайта — КБ Лидер-Сталь').trim();
-      let bodyText = ['Имя: ' + name, 'Телефон: ' + phone, '', 'Сообщение:', msg].join('\n');
-      const buildMailtoUri = (b) =>
-        'mailto:' +
-        orderMailto +
-        '?subject=' +
-        encodeURIComponent(subject) +
-        '&body=' +
-        encodeURIComponent(b);
-      const buildYandexUrl = (mailtoUri) =>
-        yandexComposeBase + '?mailto=' + encodeURIComponent(mailtoUri);
-      const maxLen = orderOpenMode === 'yandex' ? 1800 : 1950;
-      const buildFinal = (b) =>
-        orderOpenMode === 'yandex' ? buildYandexUrl(buildMailtoUri(b)) : buildMailtoUri(b);
-      let href = buildFinal(bodyText);
-      if (href.length > maxLen) {
-        const note = '\n\n[Текст укорочен — при необходимости допишите детали в письме.]';
-        while (bodyText.length > 40 && buildFinal(bodyText + note).length > maxLen) {
-          bodyText = bodyText.slice(0, Math.floor(bodyText.length * 0.88));
-        }
-        href = buildFinal(bodyText + note);
+      const subject = String(fd.get('_subject') || 'Заявка КБ Лидер-Сталь').trim();
+      const bodyText = ['Имя: ' + name, 'Телефон: ' + phone, '', 'Сообщение:', msg].join('\n');
+
+      let provider = resolveMailProvider();
+      if (!provider) {
+        const picked = await openMailProviderModal();
+        if (!picked || !picked.provider) return;
+        provider = picked.provider;
       }
+
+      const href = shortenHref(provider, subject, bodyText);
       window.location.assign(href);
-      showToast(
-        orderOpenMode === 'yandex'
-          ? 'Открывается Яндекс.Почта: поле «Кому» — ваш адрес из настроек. При необходимости войдите в аккаунт.'
-          : 'Должен открыться почтовый клиент. Если ничего не произошло: Параметры Windows → Приложения → «Почта» по умолчанию.'
-      );
+      showToast(toastAfterProvider(provider));
     });
   });
 

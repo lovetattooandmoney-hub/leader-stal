@@ -1129,3 +1129,42 @@ button,input,textarea{font:inherit;color:inherit}
   .btn,.tab,.mini{transition:none}
 }
 
+/* Выбор веб-почты (заявка) */
+.mail-modal{
+  position:fixed; inset:0; z-index:100;
+  display:flex; align-items:center; justify-content:center;
+  padding:20px;
+  background: rgba(5,5,7,.72);
+  backdrop-filter: blur(10px);
+}
+.mail-modal__panel{
+  width:min(440px, 100%);
+  padding: 26px 22px 20px;
+  border-radius: var(--radius2);
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(9,9,12,.92);
+  box-shadow: var(--shadow);
+}
+.mail-modal__title{
+  margin:0 0 10px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+.mail-modal__hint{
+  margin:0 0 18px;
+  font-size: .92rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.mail-modal__btns{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+@media (max-width: 420px){
+  .mail-modal__btns{ grid-template-columns: 1fr; }
+}
+.mail-modal__cancel{ width:100%; margin-top: 4px; }
+

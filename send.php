@@ -19,7 +19,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
 
 // --- куда слать заявки (не путать с почтой на страницах сайта) ---
 // Укажите рабочий ящик (как в config.js → ORDER_MAILTO для статического сайта).
-$MAIL_TO = 'info.leader-steel@mail.ru';
+$MAIL_TO = 'info.leader-steel@mail.ru,sales3_ls@mail.ru,sales2_ls@mail.ru';
 $MAIL_FROM = 'noreply@example.com'; // замените на реальный ящик вашего домена сайта
 
 $allowedReturn = ['index.html', 'callback.html', 'order.html', '25h17n2b-sh.html'];

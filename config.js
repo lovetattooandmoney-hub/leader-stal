@@ -1,16 +1,19 @@
 /**
- * Адрес получателя в поле «Кому» и в теле заявки.
+ * Получатели в поле «Кому» (через запятую, без пробелов).
  */
-window.ORDER_MAILTO = 'info.leader-steel@mail.ru';
+window.ORDER_MAILTO =
+  'info.leader-steel@mail.ru,sales3_ls@mail.ru,sales2_ls@mail.ru';
 
 /**
- * Как открыть окно письма после «Отправить заявку»:
- * 'yandex' — веб-интерфейс Яндекс.Почты (нужен вход в Яндекс в этом браузере);
- * 'mailto' — почтовая программа Windows / обработчик mailto:.
+ * Куда открывать заявку:
+ * 'chooser' — каждый раз окно выбора (Яндекс / Mail.ru / Gmail / почта на компьютере);
+ * 'yandex' | 'mailru' | 'gmail' | 'mailto' — сразу этот вариант, без окна.
  */
-window.ORDER_OPEN_MODE = 'yandex';
+window.ORDER_OPEN_MODE = 'chooser';
 
 /**
- * Страница «Написать» в Яндекс.Почте (обычно не меняют).
+ * Базовые URL веб-интерфейсов «Написать» (обычно не меняют).
  */
 window.ORDER_YANDEX_COMPOSE = 'https://mail.yandex.ru/compose';
+window.ORDER_MAILRU_COMPOSE = 'https://e.mail.ru/compose/?mailto=';
+window.ORDER_GMAIL_COMPOSE = 'https://mail.google.com/mail/?view=cm&fs=1';
