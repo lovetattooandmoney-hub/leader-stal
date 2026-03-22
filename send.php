@@ -28,8 +28,8 @@ if (!in_array($return, $allowedReturn, true)) {
     $return = 'index.html';
 }
 
-// антиспам: поле «website» должно быть пустым (боты часто заполняют)
-if (trim((string) ($_POST['website'] ?? '')) !== '') {
+// антиспам: поле hp_field должно быть пустым (боты часто заполняют)
+if (trim((string) ($_POST['hp_field'] ?? '')) !== '') {
     header('Location: ' . $return . '?sent=1');
     exit;
 }

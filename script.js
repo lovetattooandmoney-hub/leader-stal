@@ -236,7 +236,7 @@
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const fd = new FormData(form);
-      if (String(fd.get('website') || '').trim()) {
+      if (String(fd.get('hp_field') || '').trim()) {
         return;
       }
       const name = String(fd.get('name') || '').trim();
@@ -263,7 +263,18 @@
         encodeURIComponent(subject) +
         '&body=' +
         encodeURIComponent(body);
-      window.location.href = href;
+      try {
+        const a = document.createElement('a');
+        a.href = href;
+        a.setAttribute('aria-hidden', 'true');
+        a.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0;pointer-events:none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } catch {
+        window.location.assign(href);
+      }
+      showToast('Откройте почту и отправьте письмо — или выберите приложение, если система спросит.');
     });
   });
 
