@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Сертификаты — ООО «КБ Лидер‑Сталь»." />
+    <meta name="theme-color" content="#0a0a0c" />
+    <title>ООО «КБ Лидер‑Сталь»</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="./favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./favicon.png" />
+    <link rel="stylesheet" href="./styles.css?v=3" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Перейти к содержимому</a>
+
+    <div class="bg">
+      <div class="bg__noise" aria-hidden="true"></div>
+      <div class="bg__glow bg__glow--a" aria-hidden="true"></div>
+      <div class="bg__glow bg__glow--b" aria-hidden="true"></div>
+    </div>
+
+    <header class="header" data-header>
+      <div class="container header__inner">
+        <a class="brand" href="./index.html" aria-label="На главную">
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span class="brand__text">
+            <span class="brand__name">КБ Лидер‑Сталь</span>
+            <span class="brand__tag">металлопрокат из специальных сталей и сплавов • резка металла по чертежам</span>
+          </span>
+        </a>
+
+        <nav class="nav" aria-label="Основная навигация" data-nav>
+          <a class="nav__link" href="./index.html">Главная</a>
+          <a class="nav__link" href="./about.html">О компании</a>
+          <a class="nav__link" href="./products.html">Наша продукция</a>
+          <a class="nav__link" href="./services.html">Услуги металлообработки</a>
+          <a class="nav__link" href="./contacts.html">Наши контакты</a>
+        </nav>
+
+        <div class="header__actions">
+          <div class="header__call" data-header-call>
+            <button class="header__call-btn" type="button" aria-label="Позвонить">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7.5 3.5h2l1.2 5-1.7 1.2a14.8 14.8 0 0 0 5.3 5.3l1.2-1.7 5 1.2v2a2 2 0 0 1-1.8 2c-8.3.6-15-6.1-14.4-14.4A2 2 0 0 1 7.5 3.5Z"/>
+              </svg>
+              <span class="header__call-text">Позвонить</span>
+            </button>
+            <div class="header__call-dropdown">
+              <a class="header__call-link" href="tel:+79855113579">+7 985 511‑35‑79</a>
+              <a class="header__call-link" href="tel:+79855113578">+7 985 511‑35‑78</a>
+              <a class="header__call-link" href="tel:+74955325887">+7 495 532‑58‑87</a>
+            </div>
+          </div>
+          <button class="burger" type="button" aria-label="Открыть меню" data-burger>
+            <span class="burger__line" aria-hidden="true"></span>
+            <span class="burger__line" aria-hidden="true"></span>
+            <span class="burger__line" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+      <div class="progress" aria-hidden="true">
+        <div class="progress__bar" data-progress></div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero hero--photo">
+        <div class="container hero__inner" style="grid-template-columns: 1fr">
+          <div class="hero__content reveal">
+            <div class="pill">
+              <span class="pill__dot" aria-hidden="true"></span>
+              <span>Документы и подтверждения качества</span>
+            </div>
+            <h1 class="h1">Наши сертификаты</h1>
+            <p class="lead">
+              Раздел для размещения сканов сертификатов и сопроводительных документов. В поставках
+              предоставляем сертификаты на продукцию (по запросу).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--burgundy">
+        <div class="container">
+          <article class="card reveal">
+            <div class="split" style="grid-template-columns: 1.4fr 0.9fr; align-items:center;">
+              <div style="text-align:center;">
+                <h2 class="h3">ISO 9001‑2015</h2>
+                <p class="muted">
+                  В 2019 году наша компания успешно прошла сертификацию системы менеджмента качества
+                  ISO 9001‑2015 (ГОСТ Р ИСО 9001‑2015), что говорит о комплексном и системном подходе
+                  к управлению организацией, а также высоком уровне сотрудников ООО «КБ Лидер‑Сталь».
+                </p>
+                <p class="muted">
+                  Кроме того, применение в работе требований ISO 9002‑2015 позволяет нам осуществлять контроль
+                  качества предоставляемых услуг и эффективно выстраивать бизнес‑процессы.
+                </p>
+                <p class="muted" style="margin-top:18px;">
+                  Миссия нашей компании – выстраивать эффективное взаимодействие и долгосрочные отношения
+                  с нашими Клиентами и Партнёрами. Наша цель – помогать нашему заказчику решать непростые задачи.
+                </p>
+              </div>
+              <div style="display:flex; justify-content:center;">
+                <button
+                  type="button"
+                  data-cert-open
+                  style="background:none; border:none; padding:0; cursor:pointer;"
+                  aria-label="Открыть сертификат крупно"
+                >
+                  <figure class="card__media card__media--tall">
+                    <img
+                      src="./media/sertifikat-iso.png"
+                      alt="Сертификат ISO 9001‑2015 ООО «КБ Лидер‑Сталь»"
+                      loading="lazy"
+                    />
+                  </figure>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+      <div class="modal" data-cert-modal aria-hidden="true">
+        <div class="modal__inner">
+          <button class="modal__close" type="button" data-cert-close aria-label="Закрыть сертификат">✕</button>
+          <img
+            class="modal__img"
+            src="./media/sertifikat-iso.png"
+            alt="Сертификат ISO 9001‑2015 ООО «КБ Лидер‑Сталь»"
+          />
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div class="footer__left">
+          <div class="brand brand--small">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span class="brand__name">КБ Лидер‑Сталь</span>
+          </div>
+          <div class="fine muted">© <span data-year></span> ООО «КБ Лидер‑Сталь»</div>
+        </div>
+        <div class="footer__right">
+          <a class="fine muted link" href="./conditions.html">Условия</a>
+          <a class="fine muted link" href="./contacts.html">Контакты</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast>
+      <div class="toast__dot" aria-hidden="true"></div>
+      <div class="toast__text" data-toast-text>Готово</div>
+    </div>
+
+    <div class="float-call" data-float-call>
+      <button class="float-call__btn" type="button" aria-label="Позвонить">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7.5 3.5h2l1.2 5-1.7 1.2a14.8 14.8 0 0 0 5.3 5.3l1.2-1.7 5 1.2v2a2 2 0 0 1-1.8 2c-8.3.6-15-6.1-14.4-14.4A2 2 0 0 1 7.5 3.5Z"/>
+        </svg>
+      </button>
+      <div class="float-call__dropdown">
+        <a class="float-call__link" href="tel:+79855113579">+7 985 511‑35‑79</a>
+        <a class="float-call__link" href="tel:+79855113578">+7 985 511‑35‑78</a>
+        <a class="float-call__link" href="tel:+74955325887">+7 495 532‑58‑87</a>
+      </div>
+    </div>
+
+    <script src="./script.js?v=4" defer></script>
+  </body>
+</html>
+

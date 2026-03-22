@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Заказать обратный звонок — ООО «КБ Лидер‑Сталь»." />
+    <meta name="theme-color" content="#0a0a0c" />
+    <title>ООО «КБ Лидер‑Сталь»</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="./favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./favicon.png" />
+    <link rel="stylesheet" href="./styles.css?v=3" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Перейти к содержимому</a>
+
+    <div class="bg">
+      <div class="bg__noise" aria-hidden="true"></div>
+      <div class="bg__glow bg__glow--a" aria-hidden="true"></div>
+      <div class="bg__glow bg__glow--b" aria-hidden="true"></div>
+    </div>
+
+    <header class="header" data-header>
+      <div class="container header__inner">
+        <a class="brand" href="./index.html" aria-label="На главную">
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span class="brand__text">
+            <span class="brand__name">КБ Лидер‑Сталь</span>
+            <span class="brand__tag">металлопрокат из специальных сталей и сплавов • резка металла по чертежам</span>
+          </span>
+        </a>
+
+        <nav class="nav" aria-label="Основная навигация" data-nav>
+          <a class="nav__link" href="./index.html">Главная</a>
+          <a class="nav__link" href="./about.html">О компании</a>
+          <a class="nav__link" href="./products.html">Наша продукция</a>
+          <a class="nav__link" href="./services.html">Услуги металлообработки</a>
+          <a class="nav__link" href="./contacts.html">Наши контакты</a>
+        </nav>
+
+        <div class="header__actions">
+          <div class="header__call" data-header-call>
+            <button class="header__call-btn" type="button" aria-label="Позвонить">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7.5 3.5h2l1.2 5-1.7 1.2a14.8 14.8 0 0 0 5.3 5.3l1.2-1.7 5 1.2v2a2 2 0 0 1-1.8 2c-8.3.6-15-6.1-14.4-14.4A2 2 0 0 1 7.5 3.5Z"/>
+              </svg>
+              <span class="header__call-text">Позвонить</span>
+            </button>
+            <div class="header__call-dropdown">
+              <a class="header__call-link" href="tel:+79855113579">+7 985 511‑35‑79</a>
+              <a class="header__call-link" href="tel:+79855113578">+7 985 511‑35‑78</a>
+              <a class="header__call-link" href="tel:+74955325887">+7 495 532‑58‑87</a>
+            </div>
+          </div>
+          <button class="burger" type="button" aria-label="Открыть меню" data-burger>
+            <span class="burger__line" aria-hidden="true"></span>
+            <span class="burger__line" aria-hidden="true"></span>
+            <span class="burger__line" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+      <div class="progress" aria-hidden="true">
+        <div class="progress__bar" data-progress></div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero hero--photo">
+        <div class="container hero__inner" style="grid-template-columns: 1fr">
+          <div class="hero__content reveal">
+            <div class="pill">
+              <span class="pill__dot" aria-hidden="true"></span>
+              <span>Мы перезвоним в рабочее время</span>
+            </div>
+            <h1 class="h1">Обратный звонок</h1>
+            <p class="lead">Оставьте номер телефона — мы свяжемся с вами и уточним задачу.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--cta" style="padding-top: 20px">
+        <div class="container">
+          <div class="cta reveal" style="grid-template-columns: 1fr">
+            <form class="form" data-form style="max-width: 720px; margin-inline: auto" action="#" method="get">
+              <input type="hidden" name="_subject" value="Заказ звонка — КБ Лидер-Сталь" />
+              <input type="hidden" name="_return" value="callback.html" />
+              <input
+                type="text"
+                name="website"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+                style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0"
+              />
+              <div class="form__row">
+                <label class="field">
+                  <span class="field__label">Имя</span>
+                  <input class="field__input" name="name" autocomplete="name" placeholder="Иван" required />
+                </label>
+                <label class="field">
+                  <span class="field__label">Телефон</span>
+                  <input
+                    class="field__input"
+                    name="phone"
+                    inputmode="tel"
+                    autocomplete="tel"
+                    placeholder="+7 (999) 000‑00‑00"
+                    required
+                  />
+                </label>
+              </div>
+              <label class="field">
+                <span class="field__label">Что нужно сделать</span>
+                <textarea
+                  class="field__input field__input--area"
+                  name="message"
+                  placeholder="Например: интересует наличие 25Х17Н2Б‑Ш, резка по чертежам и т.д."
+                  required
+                ></textarea>
+              </label>
+
+              <button class="btn btn--primary btn--wide" type="submit">Заказать звонок</button>
+              <p class="fine muted">
+                Нажимая «Заказать звонок», вы соглашаетесь с обработкой персональных данных и условиями работы сайта.
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div class="footer__left">
+          <div class="brand brand--small">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span class="brand__name">КБ Лидер‑Сталь</span>
+          </div>
+          <div class="fine muted">© <span data-year></span> ООО «КБ Лидер‑Сталь»</div>
+        </div>
+        <div class="footer__right">
+          <a class="fine muted link" href="./conditions.html">Условия работы сайта</a>
+          <a class="fine muted link" href="./certificates.html">Сертификаты</a>
+          <a class="fine muted link" href="./contacts.html">Контакты</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast>
+      <div class="toast__dot" aria-hidden="true"></div>
+      <div class="toast__text" data-toast-text>Готово</div>
+    </div>
+
+    <div class="float-call" data-float-call>
+      <button class="float-call__btn" type="button" aria-label="Позвонить">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7.5 3.5h2l1.2 5-1.7 1.2a14.8 14.8 0 0 0 5.3 5.3l1.2-1.7 5 1.2v2a2 2 0 0 1-1.8 2c-8.3.6-15-6.1-14.4-14.4A2 2 0 0 1 7.5 3.5Z"/>
+        </svg>
+      </button>
+      <div class="float-call__dropdown">
+        <a class="float-call__link" href="tel:+79855113579">+7 985 511‑35‑79</a>
+        <a class="float-call__link" href="tel:+79855113578">+7 985 511‑35‑78</a>
+        <a class="float-call__link" href="tel:+74955325887">+7 495 532‑58‑87</a>
+      </div>
+    </div>
+
+    <script src="./config.js?v=4"></script>
+    <script src="./script.js?v=4" defer></script>
+  </body>
+</html>
+
