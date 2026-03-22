@@ -7,6 +7,14 @@
     typeof window.ORDER_MAILTO === 'string' && window.ORDER_MAILTO.trim() !== ''
       ? window.ORDER_MAILTO.trim()
       : 'info.leader-steel@mail.ru';
+  const orderOpenMode =
+    typeof window.ORDER_OPEN_MODE === 'string' && window.ORDER_OPEN_MODE.trim().toLowerCase() === 'mailto'
+      ? 'mailto'
+      : 'yandex';
+  const yandexComposeBase =
+    typeof window.ORDER_YANDEX_COMPOSE === 'string' && window.ORDER_YANDEX_COMPOSE.trim() !== ''
+      ? window.ORDER_YANDEX_COMPOSE.trim().replace(/\/$/, '')
+      : 'https://mail.yandex.ru/compose';
 
   const header = $('[data-header]');
   const progress = $('[data-progress]');
@@ -256,26 +264,31 @@
       }
       const subject = String(fd.get('_subject') || 'Заявка с сайта — КБ Лидер-Сталь').trim();
       let bodyText = ['Имя: ' + name, 'Телефон: ' + phone, '', 'Сообщение:', msg].join('\n');
-      const buildHref = (b) =>
+      const buildMailtoUri = (b) =>
         'mailto:' +
         orderMailto +
         '?subject=' +
         encodeURIComponent(subject) +
         '&body=' +
         encodeURIComponent(b);
-      const MAX_HREF = 1950;
-      let href = buildHref(bodyText);
-      if (href.length > MAX_HREF) {
+      const buildYandexUrl = (mailtoUri) =>
+        yandexComposeBase + '?mailto=' + encodeURIComponent(mailtoUri);
+      const maxLen = orderOpenMode === 'yandex' ? 1800 : 1950;
+      const buildFinal = (b) =>
+        orderOpenMode === 'yandex' ? buildYandexUrl(buildMailtoUri(b)) : buildMailtoUri(b);
+      let href = buildFinal(bodyText);
+      if (href.length > maxLen) {
         const note = '\n\n[Текст укорочен — при необходимости допишите детали в письме.]';
-        while (bodyText.length > 40 && buildHref(bodyText + note).length > MAX_HREF) {
+        while (bodyText.length > 40 && buildFinal(bodyText + note).length > maxLen) {
           bodyText = bodyText.slice(0, Math.floor(bodyText.length * 0.88));
         }
-        href = buildHref(bodyText + note);
+        href = buildFinal(bodyText + note);
       }
-      // Прямой переход из обработчика submit сохраняет «жест пользователя»; синтетический a.click() в Chrome часто не открывает mailto.
       window.location.assign(href);
       showToast(
-        'Должен открыться почтовый клиент. Если ничего не произошло: Параметры Windows → Приложения → «Почта» по умолчанию.'
+        orderOpenMode === 'yandex'
+          ? 'Открывается Яндекс.Почта: поле «Кому» — ваш адрес из настроек. При необходимости войдите в аккаунт.'
+          : 'Должен открыться почтовый клиент. Если ничего не произошло: Параметры Windows → Приложения → «Почта» по умолчанию.'
       );
     });
   });
