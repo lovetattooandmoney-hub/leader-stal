@@ -3,15 +3,10 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-  const formAction =
-    typeof window.FORM_SUBMIT_URL === 'string' && window.FORM_SUBMIT_URL.trim() !== ''
-      ? window.FORM_SUBMIT_URL.trim()
-      : '';
-  if (formAction) {
-    $$('[data-form]').forEach((form) => {
-      form.action = formAction;
-    });
-  }
+  const orderMailto =
+    typeof window.ORDER_MAILTO === 'string' && window.ORDER_MAILTO.trim() !== ''
+      ? window.ORDER_MAILTO.trim()
+      : 'info.leader-steel@mail.ru';
 
   const header = $('[data-header]');
   const progress = $('[data-progress]');
@@ -236,28 +231,39 @@
     });
   }
 
-  // Заявки: POST на send.php (почта хостинга, без зарубежных form-сервисов).
+  // Заявки: открытие почтового клиента (mailto) с данными формы.
   $$('[data-form]').forEach((form) => {
     form.addEventListener('submit', (e) => {
+      e.preventDefault();
       const fd = new FormData(form);
+      if (String(fd.get('website') || '').trim()) {
+        return;
+      }
       const name = String(fd.get('name') || '').trim();
       const phone = String(fd.get('phone') || '').trim();
       const msg = String(fd.get('message') || '').trim();
       if (name.length < 2) {
-        e.preventDefault();
         showToast('Укажите имя');
         return;
       }
       if (phone.replace(/\D/g, '').length < 10) {
-        e.preventDefault();
         showToast('Укажите телефон');
         return;
       }
       if (msg.length < 10) {
-        e.preventDefault();
         showToast('Опишите, что нужно сделать');
         return;
       }
+      const subject = String(fd.get('_subject') || 'Заявка с сайта — КБ Лидер-Сталь').trim();
+      const body = ['Имя: ' + name, 'Телефон: ' + phone, '', 'Сообщение:', msg].join('\n');
+      const href =
+        'mailto:' +
+        orderMailto +
+        '?subject=' +
+        encodeURIComponent(subject) +
+        '&body=' +
+        encodeURIComponent(body);
+      window.location.href = href;
     });
   });
 
