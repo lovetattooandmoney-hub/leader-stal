@@ -17,3 +17,24 @@ window.ORDER_OPEN_MODE = 'chooser';
 window.ORDER_YANDEX_COMPOSE = 'https://mail.yandex.ru/compose';
 window.ORDER_MAILRU_COMPOSE = 'https://e.mail.ru/compose/?mailto=';
 window.ORDER_GMAIL_COMPOSE = 'https://mail.google.com/mail/?view=cm&fs=1';
+
+/**
+ * Яндекс.Метрика:
+ * укажите реальный ID счётчика (число), например 12345678.
+ * Если оставить 0, Метрика и цели отправляться не будут.
+ */
+window.YM_COUNTER_ID = 0;
+
+/**
+ * Названия целей в Метрике (можно оставить как есть).
+ */
+window.YM_GOAL_FORM_SUBMIT = 'form_submit';
+window.YM_GOAL_PHONE_CLICK = 'phone_click';
+window.YM_GOAL_EMAIL_CLICK = 'email_click';
+
+/**
+ * Опционально: URL скрипта коллтрекинга.
+ * Пример: 'https://example-calltracking.ru/widget.js'
+ * Если пусто, коллтрекинг не подключается.
+ */
+window.CALLTRACKING_SCRIPT_URL = '';

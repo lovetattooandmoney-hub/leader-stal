@@ -25,6 +25,160 @@
     typeof window.ORDER_GMAIL_COMPOSE === 'string' && window.ORDER_GMAIL_COMPOSE.trim() !== ''
       ? window.ORDER_GMAIL_COMPOSE.trim()
       : 'https://mail.google.com/mail/?view=cm&fs=1';
+  const ymCounterId = Number(window.YM_COUNTER_ID || 0);
+  const ymGoalFormSubmit = String(window.YM_GOAL_FORM_SUBMIT || 'form_submit');
+  const ymGoalPhoneClick = String(window.YM_GOAL_PHONE_CLICK || 'phone_click');
+  const ymGoalEmailClick = String(window.YM_GOAL_EMAIL_CLICK || 'email_click');
+  const calltrackingScriptUrl =
+    typeof window.CALLTRACKING_SCRIPT_URL === 'string' ? window.CALLTRACKING_SCRIPT_URL.trim() : '';
+
+  const UTM_KEYS = [
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_content',
+    'utm_term',
+    'yclid'
+  ];
+  const UTM_STORAGE_KEY = 'leader-stal-utm-v1';
+  const pendingGoals = [];
+
+  const canUseStorage = () => {
+    try {
+      return typeof window.localStorage !== 'undefined';
+    } catch {
+      return false;
+    }
+  };
+
+  const getUtmPayloadFromSearch = () => {
+    const params = new URLSearchParams(window.location.search);
+    const payload = {};
+    for (const key of UTM_KEYS) {
+      const val = params.get(key);
+      if (val && val.trim() !== '') payload[key] = val.trim();
+    }
+    return payload;
+  };
+
+  const saveUtmPayload = (payload) => {
+    if (!canUseStorage()) return;
+    try {
+      localStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(payload));
+    } catch {
+      /* ignore storage errors */
+    }
+  };
+
+  const getSavedUtmPayload = () => {
+    if (!canUseStorage()) return {};
+    try {
+      const raw = localStorage.getItem(UTM_STORAGE_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch {
+      return {};
+    }
+  };
+
+  const getUtmPayload = () => {
+    const fromSearch = getUtmPayloadFromSearch();
+    if (Object.keys(fromSearch).length > 0) {
+      saveUtmPayload(fromSearch);
+      return fromSearch;
+    }
+    return getSavedUtmPayload();
+  };
+
+  const appendUtmToInternalLinks = () => {
+    const utm = getUtmPayload();
+    if (Object.keys(utm).length === 0) return;
+    $$('a[href]').forEach((link) => {
+      const href = link.getAttribute('href') || '';
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+      let url;
+      try {
+        url = new URL(href, window.location.href);
+      } catch {
+        return;
+      }
+      if (url.origin !== window.location.origin) return;
+      if (url.searchParams.has('utm_source')) return;
+      for (const key of UTM_KEYS) {
+        if (utm[key]) url.searchParams.set(key, String(utm[key]));
+      }
+      link.setAttribute('href', url.pathname + url.search + url.hash);
+    });
+  };
+
+  const initYandexMetrika = () => {
+    if (!Number.isFinite(ymCounterId) || ymCounterId <= 0) return;
+    if (typeof window.ym !== 'function') {
+      window.ym =
+        window.ym ||
+        function () {
+          (window.ym.a = window.ym.a || []).push(arguments);
+        };
+      window.ym.l = Date.now();
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://mc.yandex.ru/metrika/tag.js';
+      const firstScript = document.getElementsByTagName('script')[0];
+      if (firstScript && firstScript.parentNode) {
+        firstScript.parentNode.insertBefore(s, firstScript);
+      } else {
+        document.head.appendChild(s);
+      }
+    }
+    window.ym(ymCounterId, 'init', {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+      webvisor: true
+    });
+  };
+
+  const sendGoal = (goalName, params = {}) => {
+    if (!Number.isFinite(ymCounterId) || ymCounterId <= 0 || !goalName) return;
+    if (typeof window.ym === 'function') {
+      window.ym(ymCounterId, 'reachGoal', goalName, params);
+      return;
+    }
+    pendingGoals.push({ goalName, params });
+  };
+
+  const flushPendingGoals = () => {
+    if (typeof window.ym !== 'function' || pendingGoals.length === 0) return;
+    while (pendingGoals.length > 0) {
+      const item = pendingGoals.shift();
+      window.ym(ymCounterId, 'reachGoal', item.goalName, item.params);
+    }
+  };
+
+  const initGoalListeners = () => {
+    document.addEventListener('click', (e) => {
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      const telLink = target.closest('a[href^="tel:"]');
+      if (telLink) {
+        sendGoal(ymGoalPhoneClick, { href: telLink.getAttribute('href') || '' });
+        return;
+      }
+      const mailLink = target.closest('a[href^="mailto:"]');
+      if (mailLink) {
+        sendGoal(ymGoalEmailClick, { href: mailLink.getAttribute('href') || '' });
+      }
+    });
+  };
+
+  const initCalltracking = () => {
+    if (!calltrackingScriptUrl) return;
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = calltrackingScriptUrl;
+    document.head.appendChild(s);
+  };
 
   const header = $('[data-header]');
   const progress = $('[data-progress]');
@@ -163,6 +317,12 @@
   };
 
   // Year
+  initYandexMetrika();
+  appendUtmToInternalLinks();
+  initGoalListeners();
+  initCalltracking();
+  window.setTimeout(flushPendingGoals, 1200);
+
   const y = $('[data-year]');
   if (y) y.textContent = String(new Date().getFullYear());
 
@@ -393,7 +553,11 @@
         return;
       }
       const subject = String(fd.get('_subject') || 'Заявка КБ Лидер-Сталь').trim();
-      const bodyText = ['Имя: ' + name, 'Телефон: ' + phone, '', 'Сообщение:', msg].join('\n');
+      const utm = getUtmPayload();
+      const utmRows = Object.keys(utm).map((k) => `${k}: ${utm[k]}`);
+      const bodyText = ['Имя: ' + name, 'Телефон: ' + phone, '', 'Сообщение:', msg]
+        .concat(utmRows.length ? ['', 'UTM:', ...utmRows] : [])
+        .join('\n');
 
       let provider = resolveMailProvider();
       if (!provider) {
@@ -403,6 +567,7 @@
       }
 
       const href = shortenHref(provider, subject, bodyText);
+      sendGoal(ymGoalFormSubmit, { form: form.getAttribute('class') || 'data-form' });
       window.location.assign(href);
       showToast(toastAfterProvider(provider));
     });
