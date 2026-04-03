@@ -18,7 +18,7 @@
     />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./favicon.png" />
-    <link rel="stylesheet" href="./styles.css?v=5" />
+    <link rel="stylesheet" href="./styles.css?v=6" />
   </head>
   <body>
     <a class="skip" href="#main">Перейти к содержимому</a>
@@ -130,6 +130,52 @@
         </div>
       </section>
 
+      <section class="section section--burgundy section--photo">
+        <div class="container">
+          <div class="section__head reveal">
+            <h2 class="h2">Фотогалерея</h2>
+          </div>
+          <div class="gallery reveal" data-gallery>
+            <a class="gallery__item" href="./media/gallery/7Uuq6UY7.jpg">
+              <img src="./media/gallery/7Uuq6UY7.jpg" alt="Фото продукции КБ Лидер-Сталь 1" loading="lazy" />
+            </a>
+            <a class="gallery__item" href="./media/gallery/8ymsO8kKzWXuQ0Q8G6ssEGcHgKSeDAKe6EKP7YfUo6h6CCIHEYKFTOYJIyv4aRjF0wZMlW4QpTyToftXTRAgyqn6.jpg">
+              <img src="./media/gallery/8ymsO8kKzWXuQ0Q8G6ssEGcHgKSeDAKe6EKP7YfUo6h6CCIHEYKFTOYJIyv4aRjF0wZMlW4QpTyToftXTRAgyqn6.jpg" alt="Фото продукции КБ Лидер-Сталь 2" loading="lazy" />
+            </a>
+            <a class="gallery__item" href="./media/gallery/9YYfUdf8.jpg">
+              <img src="./media/gallery/9YYfUdf8.jpg" alt="Фото продукции КБ Лидер-Сталь 3" loading="lazy" />
+            </a>
+            <a class="gallery__item" href="./media/gallery/C75niZY4.jpg">
+              <img src="./media/gallery/C75niZY4.jpg" alt="Фото продукции КБ Лидер-Сталь 4" loading="lazy" />
+            </a>
+            <a class="gallery__item" href="./media/gallery/lLqSQkRQ.jpg">
+              <img src="./media/gallery/lLqSQkRQ.jpg" alt="Фото продукции КБ Лидер-Сталь 5" loading="lazy" />
+            </a>
+            <a class="gallery__item" href="./media/gallery/lncWvb0H.jpg">
+              <img src="./media/gallery/lncWvb0H.jpg" alt="Фото продукции КБ Лидер-Сталь 6" loading="lazy" />
+            </a>
+            <a class="gallery__item" href="./media/gallery/mcOsGVec.jpg">
+              <img src="./media/gallery/mcOsGVec.jpg" alt="Фото продукции КБ Лидер-Сталь 7" loading="lazy" />
+            </a>
+            <a class="gallery__item" href="./media/gallery/NvcRvDmg.jpg">
+              <img src="./media/gallery/NvcRvDmg.jpg" alt="Фото продукции КБ Лидер-Сталь 8" loading="lazy" />
+            </a>
+            <a class="gallery__item" href="./media/gallery/Ow8WNjip.jpg">
+              <img src="./media/gallery/Ow8WNjip.jpg" alt="Фото продукции КБ Лидер-Сталь 9" loading="lazy" />
+            </a>
+            <a class="gallery__item" href="./media/gallery/rA2w6qys.jpg">
+              <img src="./media/gallery/rA2w6qys.jpg" alt="Фото продукции КБ Лидер-Сталь 10" loading="lazy" />
+            </a>
+            <a class="gallery__item" href="./media/gallery/T3eSei5Z.jpg">
+              <img src="./media/gallery/T3eSei5Z.jpg" alt="Фото продукции КБ Лидер-Сталь 11" loading="lazy" />
+            </a>
+            <a class="gallery__item" href="./media/gallery/ZdFgbfA9.jpg">
+              <img src="./media/gallery/ZdFgbfA9.jpg" alt="Фото продукции КБ Лидер-Сталь 12" loading="lazy" />
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section class="section section--tight section--burgundy section--photo" id="advantages">
         <div class="container">
           <div class="section__head reveal">
@@ -195,6 +241,13 @@
     <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast>
       <div class="toast__dot" aria-hidden="true"></div>
       <div class="toast__text" data-toast-text>Готово</div>
+    </div>
+
+    <div class="gallery-modal" data-gallery-modal aria-hidden="true">
+      <button class="gallery-modal__close" type="button" data-gallery-close aria-label="Закрыть">×</button>
+      <button class="gallery-modal__nav gallery-modal__nav--prev" type="button" data-gallery-prev aria-label="Предыдущее фото">‹</button>
+      <img class="gallery-modal__img" src="" alt="" data-gallery-image />
+      <button class="gallery-modal__nav gallery-modal__nav--next" type="button" data-gallery-next aria-label="Следующее фото">›</button>
     </div>
 
     <div class="float-call" data-float-call>

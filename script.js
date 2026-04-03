@@ -529,6 +529,72 @@
     });
   }
 
+  // Gallery lightbox (about.html)
+  const gallery = $('[data-gallery]');
+  const galleryModal = $('[data-gallery-modal]');
+  const galleryModalImage = $('[data-gallery-image]');
+  const galleryClose = $('[data-gallery-close]');
+  const galleryPrev = $('[data-gallery-prev]');
+  const galleryNext = $('[data-gallery-next]');
+  if (gallery && galleryModal && galleryModalImage) {
+    const links = $$('a.gallery__item', gallery);
+    let activeIndex = 0;
+
+    const renderGalleryImage = () => {
+      const link = links[activeIndex];
+      if (!link) return;
+      const img = $('img', link);
+      galleryModalImage.src = link.getAttribute('href') || '';
+      galleryModalImage.alt = img?.getAttribute('alt') || 'Фото';
+    };
+
+    const openGallery = (index) => {
+      activeIndex = index;
+      renderGalleryImage();
+      galleryModal.classList.add('is-open');
+      galleryModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeGallery = () => {
+      galleryModal.classList.remove('is-open');
+      galleryModal.setAttribute('aria-hidden', 'true');
+      galleryModalImage.src = '';
+      document.body.style.overflow = '';
+    };
+
+    const showPrev = () => {
+      activeIndex = (activeIndex - 1 + links.length) % links.length;
+      renderGalleryImage();
+    };
+
+    const showNext = () => {
+      activeIndex = (activeIndex + 1) % links.length;
+      renderGalleryImage();
+    };
+
+    links.forEach((link, index) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openGallery(index);
+      });
+    });
+
+    galleryClose?.addEventListener('click', closeGallery);
+    galleryPrev?.addEventListener('click', showPrev);
+    galleryNext?.addEventListener('click', showNext);
+    galleryModal.addEventListener('click', (e) => {
+      if (e.target === galleryModal) closeGallery();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!galleryModal.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeGallery();
+      if (e.key === 'ArrowLeft') showPrev();
+      if (e.key === 'ArrowRight') showNext();
+    });
+  }
+
   // Заявки: веб-почта (Яндекс / Mail.ru / Gmail) или mailto — см. config.js.
   $$('[data-form]').forEach((form) => {
     form.addEventListener('submit', async (e) => {
