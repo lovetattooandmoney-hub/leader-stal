@@ -455,6 +455,13 @@ button,input,textarea{font:inherit;color:inherit}
   mask-composite: exclude;
   opacity:.65;
 }
+.hero__aside{
+  align-self:start;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  width:100%;
+}
 
 .layers{display:grid; gap:14px}
 .layer{
@@ -477,6 +484,39 @@ button,input,textarea{font:inherit;color:inherit}
 .layer__title{font-weight:700; letter-spacing:.2px}
 .layer__desc{margin-top:6px; font-size:13px; color:rgba(255,255,255,.78)}
 .layer__meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+.hero__stock-link{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:flex-start;
+  gap:0;
+  margin-top:200px !important;
+  width:92%;
+  align-self:flex-start;
+  margin-left:4%;
+  text-decoration:none;
+  color:inherit;
+  border:1px solid rgba(223,37,49,.72);
+  background: linear-gradient(180deg, rgba(223,37,49,.56), rgba(223,37,49,.20));
+  transition: transform .15s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+}
+.hero__stock-link .layer__title,
+.hero__stock-link .layer__desc{
+  display:block;
+  white-space:normal;
+}
+.hero__stock-link .layer__title{
+  line-height:1.2;
+}
+.hero__stock-link .layer__desc{
+  margin-top:6px;
+  line-height:1.35;
+}
+.hero__stock-link:hover{
+  transform: translateY(-1px);
+  border-color: rgba(223,37,49,.65);
+  background: linear-gradient(180deg, rgba(223,37,49,.65), rgba(223,37,49,.24));
+}
 
 .chip{
   display:inline-flex; align-items:center;
@@ -488,6 +528,12 @@ button,input,textarea{font:inherit;color:inherit}
   color:rgba(255,255,255,.80);
 }
 .chip--soft{background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.10)}
+.chip--accent{
+  background: linear-gradient(180deg, rgba(223,37,49,.95), rgba(223,37,49,.62));
+  border-color: rgba(223,37,49,.55);
+  color:#fff;
+  box-shadow: 0 10px 26px rgba(223,37,49,.28);
+}
 
 .section{padding: 60px 0}
 .section--tight{padding: 44px 0}
@@ -1145,6 +1191,7 @@ button,input,textarea{font:inherit;color:inherit}
   .float-call__btn svg{width:22px; height:22px}
   .hero__inner{grid-template-columns: 1fr; gap:14px}
   .hero{padding-top: 26px}
+  .hero__stock-link{margin-top:32px !important}
   .hero__stats{grid-template-columns: 1fr; gap:10px}
   .grid--3{grid-template-columns: 1fr}
   .grid--2{grid-template-columns: 1fr}
