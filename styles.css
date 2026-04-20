@@ -1015,6 +1015,7 @@ button,input,textarea{font:inherit;color:inherit}
   width:260px; height:260px;
   background: radial-gradient(circle at 40% 40%, rgba(223,37,49,.20), transparent 60%);
   filter: blur(20px);
+  pointer-events:none;
 }
 .case__top{display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
 .case__title{font-weight:700}
