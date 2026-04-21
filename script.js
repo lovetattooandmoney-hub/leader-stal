@@ -326,6 +326,14 @@
   const y = $('[data-year]');
   if (y) y.textContent = String(new Date().getFullYear());
 
+  const nalichieUrl =
+    typeof window.NALICHIE_PDF_URL === 'string' && window.NALICHIE_PDF_URL.trim() !== ''
+      ? window.NALICHIE_PDF_URL.trim()
+      : './media/nalichie_ooo_kb_lider-stal.pdf';
+  $$('a[data-nalichie]').forEach((a) => {
+    a.setAttribute('href', nalichieUrl);
+  });
+
   // Scroll progress
   const updateProgress = () => {
     if (!progress) return;
