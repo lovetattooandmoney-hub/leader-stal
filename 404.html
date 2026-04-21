@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,follow" />
+    <title>Перенаправление — КБ Лидер-Сталь</title>
+    <script>
+      (function () {
+        var path = (window.location.pathname || "/").toLowerCase();
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+
+        var direct = {
+          "/about/": "/about.html",
+          "/products/": "/products.html",
+          "/services/": "/services.html",
+          "/contacts/": "/contacts.html",
+          "/conditions/": "/conditions.html",
+          "/certificates/": "/certificates.html",
+          "/order/": "/order.html",
+          "/callback/": "/callback.html",
+          "/25h17n2b-sh/": "/25h17n2b-sh.html",
+          "/07h16n6-sh/": "/07h16n6-sh.html",
+          "/25hsnvfa-vp25/": "/25hsnvfa-vp25.html",
+          "/10h11n23t3mr-vd-ep33-vd/": "/10h11n23t3mr-vd-ep33-vd.html",
+          "/30hgsn2a-vd/": "/30hgsn2a-vd.html",
+          "/nashi-sertifikaty/": "/certificates.html",
+          "/razmestit-zakaz/": "/order.html",
+          "/izgotovlenie-besshovnyh-trub/": "/services.html",
+          "/obratnyj-zvonok/": "/callback.html",
+          "/o-kompanii/": "/about.html",
+          "/nalichie/": "/products.html",
+          "/pokovki/": "/products.html"
+        };
+
+        var target = direct[path];
+        if (!target) {
+          if (path.indexOf("sertifikat") !== -1) target = "/certificates.html";
+          else if (path.indexOf("zakaz") !== -1) target = "/order.html";
+          else if (path.indexOf("besshov") !== -1 || path.indexOf("trub") !== -1) target = "/services.html";
+          else if (path.indexOf("zvonok") !== -1 || path.indexOf("callback") !== -1) target = "/callback.html";
+          else if (path.indexOf("kompani") !== -1 || path.indexOf("about") !== -1) target = "/about.html";
+          else if (path.indexOf("nalich") !== -1 || path.indexOf("pokovk") !== -1) target = "/products.html";
+          else target = "/index.html";
+        }
+
+        window.location.replace(target + search + hash);
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Страница перемещена. Выполняется перенаправление...</p>
+    <p><a href="/index.html">Перейти на главную</a></p>
+  </body>
+</html>
