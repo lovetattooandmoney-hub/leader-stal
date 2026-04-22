@@ -54,4 +54,4 @@ window.CALLTRACKING_SCRIPT_URL = '';
  * Если оставить пустой строкой '', будет использоваться локальный файл ./media/nalichie_ooo_kb_lider-stal.pdf
  */
 window.NALICHIE_PDF_URL =
-  'https://docs.google.com/spreadsheets/d/1NmHy8AYh7dPnKHRsxCrl0JWqV6E3_qVp/edit?gid=1094705582#gid=1094705582';
+  'https://docs.google.com/spreadsheets/d/1Xl806j9tckrFdRxFNezZwv1KvakTOYEV/edit?usp=sharing&ouid=112667594729025666434&rtpof=true&sd=true';
