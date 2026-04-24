@@ -484,6 +484,14 @@ button,input,textarea{font:inherit;color:inherit}
 .layer__title{font-weight:700; letter-spacing:.2px}
 .layer__desc{margin-top:6px; font-size:13px; color:rgba(255,255,255,.78)}
 .layer__meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+@keyframes stockPulse{
+  0%, 100%{
+    box-shadow: 0 8px 28px rgba(223,37,49,.22), 0 0 0 0 rgba(223,37,49,.32);
+  }
+  50%{
+    box-shadow: 0 10px 34px rgba(223,37,49,.32), 0 0 0 12px rgba(223,37,49,0);
+  }
+}
 .hero__stock-link{
   display:flex;
   flex-direction:column;
@@ -499,6 +507,7 @@ button,input,textarea{font:inherit;color:inherit}
   border:1px solid rgba(223,37,49,.72);
   background: linear-gradient(180deg, rgba(223,37,49,.56), rgba(223,37,49,.20));
   transition: transform .15s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+  animation: stockPulse 2.3s ease-in-out infinite;
 }
 .hero__stock-link .layer__title,
 .hero__stock-link .layer__desc{
@@ -513,6 +522,7 @@ button,input,textarea{font:inherit;color:inherit}
   line-height:1.35;
 }
 .hero__stock-link:hover{
+  animation: none;
   transform: translateY(-1px);
   border-color: rgba(223,37,49,.65);
   background: linear-gradient(180deg, rgba(223,37,49,.65), rgba(223,37,49,.24));

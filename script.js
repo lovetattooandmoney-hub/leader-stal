@@ -399,6 +399,17 @@
   // Mobile menu (inject overlay)
   const nav = $('[data-nav]');
   const burger = $('[data-burger]');
+  if (nav && !$('[data-nav-nalichie]', nav)) {
+    const navNalichie = document.createElement('a');
+    navNalichie.className = 'nav__link';
+    navNalichie.href = './media/nalichie_ooo_kb_lider-stal.pdf';
+    navNalichie.setAttribute('data-nalichie', '');
+    navNalichie.setAttribute('data-nav-nalichie', '');
+    navNalichie.target = '_blank';
+    navNalichie.rel = 'noopener';
+    navNalichie.textContent = 'Наличие';
+    nav.appendChild(navNalichie);
+  }
   let menu = null;
   const ensureMenu = () => {
     if (menu) return menu;

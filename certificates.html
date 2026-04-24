@@ -15,7 +15,7 @@
     />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./favicon.png" />
-    <link rel="stylesheet" href="./styles.css?v=5" />
+    <link rel="stylesheet" href="./styles.css?v=12" />
   </head>
   <body>
     <a class="skip" href="#main">Перейти к содержимому</a>
@@ -108,35 +108,20 @@
                 </p>
               </div>
               <div style="display:flex; justify-content:center;">
-                <button
-                  type="button"
-                  data-cert-open
-                  style="background:none; border:none; padding:0; cursor:pointer;"
-                  aria-label="Открыть сертификат крупно"
+                <a
+                  class="btn btn--primary"
+                  href="./media/ISO_OOO_KB_Lider-Stal_2026-2028.pdf"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Открыть сертификат ISO 2026-2028"
                 >
-                  <figure class="card__media card__media--tall">
-                    <img
-                      src="./media/sertifikat-iso.png"
-                      alt="Сертификат ISO 9001‑2015 ООО «КБ Лидер‑Сталь»"
-                      loading="lazy"
-                    />
-                  </figure>
-                </button>
+                  Открыть сертификат ISO 2026-2028 (PDF)
+                </a>
               </div>
             </div>
           </article>
         </div>
       </section>
-      <div class="modal" data-cert-modal aria-hidden="true">
-        <div class="modal__inner">
-          <button class="modal__close" type="button" data-cert-close aria-label="Закрыть сертификат">✕</button>
-          <img
-            class="modal__img"
-            src="./media/sertifikat-iso.png"
-            alt="Сертификат ISO 9001‑2015 ООО «КБ Лидер‑Сталь»"
-          />
-        </div>
-      </div>
     </main>
 
     <footer class="footer">
@@ -173,8 +158,8 @@
       </div>
     </div>
 
-    <script src="./config.js?v=12"></script>
-    <script src="./script.js?v=11" defer></script>
+    <script src="./config.js?v=14"></script>
+    <script src="./script.js?v=12" defer></script>
   </body>
 </html>
 
