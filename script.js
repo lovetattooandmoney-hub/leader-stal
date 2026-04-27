@@ -402,7 +402,7 @@
   if (nav && !$('[data-nav-nalichie]', nav)) {
     const navNalichie = document.createElement('a');
     navNalichie.className = 'nav__link';
-    navNalichie.href = './media/nalichie_ooo_kb_lider-stal.pdf';
+    navNalichie.href = nalichieUrl;
     navNalichie.setAttribute('data-nalichie', '');
     navNalichie.setAttribute('data-nav-nalichie', '');
     navNalichie.target = '_blank';
